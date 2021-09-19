@@ -16,7 +16,9 @@ app.use(bodyParser.json());
 const mongoose = require('mongoose');
 const e = require('express');
 
-mongoose.connect('mongodb+srv://olivia:2503wjdgus@cluster0.psc8h.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+const config = require('./config/key');
+
+mongoose.connect(config.mongoURI)
 .then(() => console.log('MongoDB Connected...')) // 연결 확인
 .catch((e) => console.log('MongoDB error: ',e)); // error 발생시 보여주게 함
 
