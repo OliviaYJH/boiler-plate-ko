@@ -8,4 +8,4 @@ https://tistory-itolivia.tistory.com/334?category=965933
 
 
 3week study
-https://tistory-itolivia.tistory.com/manage/posts/
+https://tistory-itolivia.tistory.com/341
