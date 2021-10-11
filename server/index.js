@@ -4,26 +4,26 @@ const port = 5000
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-// User ¸ğµ¨ °¡Á®¿À±â
+// User ëª¨ë¸ ê°€ì ¸ì˜¤ê¸°
 const { User } = require("./models/User");
 const { auth} = require('./middleware/auth');
 
-// bodyParser°¡ ClientÇÑÅ×¼­ ¿À´Â Á¤º¸¸¦ ¼­¹ö¿¡¼­ ºĞ¼®ÇØ °¡Á®¿Ã ¼ö ÀÖ°Ô
-// application/-www-form-urlencoded ·ÎµÈ µ¥ÀÌÅÍ¸¦ ºĞ¼®ÇØ °¡Á®¿Ã ¼ö ÀÖ°Ô
+// bodyParserê°€ Clientí•œí…Œì„œ ì˜¤ëŠ” ì •ë³´ë¥¼ ì„œë²„ì—ì„œ ë¶„ì„í•´ ê°€ì ¸ì˜¬ ìˆ˜ ìˆê²Œ
+// application/-www-form-urlencoded ë¡œëœ ë°ì´í„°ë¥¼ ë¶„ì„í•´ ê°€ì ¸ì˜¬ ìˆ˜ ìˆê²Œ
 app.use(bodyParser.urlencoded({extended: true}));
 // application/json
 app.use(bodyParser.json()); 
 app.use(cookieParser());
 
-// ¾îÇÃ¸®ÄÉÀÌ¼Ç°ú ¸ù°íDB ¿¬°á
+// ì–´í”Œë¦¬ì¼€ì´ì…˜ê³¼ ëª½ê³ DB ì—°ê²°
 const mongoose = require('mongoose');
 const e = require('express');
 
 const config = require('./config/key');
 
 mongoose.connect(config.mongoURI)
-.then(() => console.log('MongoDB Connected...')) // ¿¬°á È®ÀÎ
-.catch((e) => console.log('MongoDB error: ',e)); // error ¹ß»ı½Ã º¸¿©ÁÖ°Ô ÇÔ
+.then(() => console.log('MongoDB Connected...')) // ì—°ê²° í™•ì¸
+.catch((e) => console.log('MongoDB error: ',e)); // error ë°œìƒì‹œ ë³´ì—¬ì£¼ê²Œ í•¨
 
 
 app.get('/', (req, res) => res.send('Hello World! hihi'))
@@ -35,57 +35,57 @@ app.get('/api/hello', (req, res) => {
 
 // Register Route
 app.post('/api/users/register', (req,res) => {
-    /* È¸¿ø °¡ÀÔ ÇÒ ¶§ ÇÊ¿äÇÑ Á¤º¸µéÀ» client¿¡¼­ °¡Á®¿À¸é
-    ±×°ÍµéÀ» µ¥ÀÌÅÍ º£ÀÌ½º¿¡ ³Ö¾îÁØ´Ù */
+    /* íšŒì› ê°€ì… í•  ë•Œ í•„ìš”í•œ ì •ë³´ë“¤ì„ clientì—ì„œ ê°€ì ¸ì˜¤ë©´
+    ê·¸ê²ƒë“¤ì„ ë°ì´í„° ë² ì´ìŠ¤ì— ë„£ì–´ì¤€ë‹¤ */
 
-    // bodyParserÀ» ÀÌ¿ëÇØ¼­ req.body·Î Client°¡ º¸³»´Â Á¤º¸¸¦ ¹ŞÀ½
+    // bodyParserì„ ì´ìš©í•´ì„œ req.bodyë¡œ Clientê°€ ë³´ë‚´ëŠ” ì •ë³´ë¥¼ ë°›ìŒ
     const user = new User(req.body)
     
-    // Á¤º¸¸¦ save ÇÏ±â Àü¿¡ ºñ¹øÀ» ¾ÏÈ£È­ ÇØ¾ß ÇÔ
-    // index.jsÀÇ userSchema.pre() ÇÔ¼ö ½ÇÇà
+    // ì •ë³´ë¥¼ save í•˜ê¸° ì „ì— ë¹„ë²ˆì„ ì•”í˜¸í™” í•´ì•¼ í•¨
+    // index.jsì˜ userSchema.pre() í•¨ìˆ˜ ì‹¤í–‰
     
-    // save()´Â MongDB ¸Ş¼Òµå => Á¤º¸µéÀÌ user ¸ğµ¨¿¡ ÀúÀåµÊ
+    // save()ëŠ” MongDB ë©”ì†Œë“œ => ì •ë³´ë“¤ì´ user ëª¨ë¸ì— ì €ì¥ë¨
     user.save((err, userInfo) => {
-        if(err) return res.json({success: false, err}) // json Çü½ÄÀ¸·Î ¿¡·¯ ¸Ş¼¼Áö Àü´Ş
-        return res.status(200).json({ // status(200): ¼º°øÇß´Ù´Â ÀÇ¹Ì 
-            // userInfo¸¦ Client¿¡ Á¤º¸ Àü´Ş
+        if(err) return res.json({success: false, err}) // json í˜•ì‹ìœ¼ë¡œ ì—ëŸ¬ ë©”ì„¸ì§€ ì „ë‹¬
+        return res.status(200).json({ // status(200): ì„±ê³µí–ˆë‹¤ëŠ” ì˜ë¯¸ 
+            // userInfoë¥¼ Clientì— ì •ë³´ ì „ë‹¬
             success: true
         })
     })
 })
 
 app.post('/api/users/login', (req, res) => {
-    // ¿äÃ»µÈ ÀÌ¸ŞÀÏÀ» µ¥ÀÌÅÍ º£ÀÌ½º¿¡ ÀÖ´ÂÁö È®ÀÎ
+    // ìš”ì²­ëœ ì´ë©”ì¼ì„ ë°ì´í„° ë² ì´ìŠ¤ì— ìˆëŠ”ì§€ í™•ì¸
     User.findOne({email: req.body.email}, (err, user)=> {
-        if(!user) {// ÀÌ¸ŞÀÏÀ» °¡Áø user°¡ ¾ø´Ù¸é
+        if(!user) {// ì´ë©”ì¼ì„ ê°€ì§„ userê°€ ì—†ë‹¤ë©´
             return res.json({
                 loginSuccess: false,
-                message: "Á¦°øµÈ ÀÌ¸ŞÀÏ¿¡ ÇØ´çÇÏ´Â À¯Àú°¡ ¾ø½À´Ï´Ù."
+                message: "no email user."
             })
         }
 
-        // user°¡ ÀÖ´Ù¸é ¿äÃ»µÈ ÀÌ¸ŞÀÏÀÌ µ¥ÀÌÅÍ º£ÀÌ½º¿¡ ÀÖ´Ù¸é ºñ¹øÀÌ ¸Â´Â ºñ¹øÀÎÁö È®ÀÎ
+        // userê°€ ìˆë‹¤ë©´ ìš”ì²­ëœ ì´ë©”ì¼ì´ ë°ì´í„° ë² ì´ìŠ¤ì— ìˆë‹¤ë©´ ë¹„ë²ˆì´ ë§ëŠ” ë¹„ë²ˆì¸ì§€ í™•ì¸
         user.comparePassword(req.body.password, (err, isMatch) => {
-            // ¸Ş¼Òµå´Â User.js(user model) ¿¡¼­ »ı¼º
-            if(!isMatch) // ºñ¹øÀÌ Æ²¸° °æ¿ì
-                return res.json({loginSuccess: false, message: "ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù."})
+            // ë©”ì†Œë“œëŠ” User.js(user model) ì—ì„œ ìƒì„±
+            if(!isMatch) // ë¹„ë²ˆì´ í‹€ë¦° ê²½ìš°
+                return res.json({loginSuccess: false, message: "wrong password"})
             
-            // ºñ¹Ğ¹øÈ£°¡ ¸Â´Ù¸é Token »ı¼ºÇÏ±â
+            // ë¹„ë°€ë²ˆí˜¸ê°€ ë§ë‹¤ë©´ Token ìƒì„±í•˜ê¸°
             user.generateToken((err, user) => {
                 if(err) return res.status(400).send(err);
 
-                // tokenÀ» ÄíÅ°¿¡ ÀúÀå
+                // tokenì„ ì¿ í‚¤ì— ì €ì¥
                 res.cookie("x_auth", user.token)
-                .status(200) // ¼º°ø
+                .status(200) // ì„±ê³µ
                 .json({loginSuccess: true, userId: user._id})
             })
         })
     })
 })
 
-// role 0 -> ÀÏ¹İ À¯Àú          role 0ÀÌ ¾Æ´Ï¸é °ü¸®ÀÚ
+// role 0 -> ì¼ë°˜ ìœ ì €          role 0ì´ ì•„ë‹ˆë©´ ê´€ë¦¬ì
 app.get('/api/users/auth', auth, (req, res) => {
-    // ¿©±â±îÁö ¹Ìµé¿ş¾î¸¦ Åë°úÇß´Ù´Â ÀÇ¹Ì´Â AuthenticationÀÌ True¶ó´Â ÀÇ¹Ì
+    // ì—¬ê¸°ê¹Œì§€ ë¯¸ë“¤ì›¨ì–´ë¥¼ í†µê³¼í–ˆë‹¤ëŠ” ì˜ë¯¸ëŠ” Authenticationì´ Trueë¼ëŠ” ì˜ë¯¸
     res.status(200).json({
         _id: req.user._id,
         isAdmin: req.user.role === 0 ? false: true,

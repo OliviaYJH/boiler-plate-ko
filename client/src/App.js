@@ -8,6 +8,7 @@ import {
 import LandingPage from './components/views/LandingPage/LandingPage';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
+import Auth from './hoc/auth';
 
 
 function App() {
@@ -15,15 +16,9 @@ function App() {
     <Router>
       <div>
         <Switch>
-          <Route exact path="/">  
-            <LandingPage />
-          </Route>
-          <Route exact path="/login"> {/* <Route exact path"/login" component={LoginPage} /> 이렇게 작성해도 됨 */}
-            <LoginPage />
-          </Route>
-          <Route exact path="/register">
-            <RegisterPage />
-          </Route>
+          <Route exact path="/" component={Auth(LandingPage, null, true)}/> 
+          <Route exact path="/login" component={Auth(LoginPage, false)}/>
+          <Route exact path="/register" component={Auth(RegisterPage, false)}/>
         </Switch>
       </div>
     </Router>
